@@ -1,10 +1,21 @@
 import turtle               # import turtle library
-
+import time                 # import time library
 screen = turtle.Screen()    # initialize the screen for turtle
 lines_points = [(-295,100),(-295,-100),(-100,295),(100,295)]    # tuple coordinate points to draw "X" or "Y"
 angle_degress = [0,0,270,270]                                   # degree list to set heading for "X" or "Y"
 
+
 class board:                # create a class
+    POINTS = [(-290.0, 290.0,-110.0, 290.0,-110.0, 110.0,-290.0, 110.0),    # cooridnates of each sector
+          (-90.0, 290.0, 90.0, 290.0, 90.0, 110.0, -90.0, 110.0), 
+          (110.0, 290.0, 290.0, 290.0, 290.0, 110.0, 110.0, 110.0),
+          (-290.0, 90.0, -110.0, 90.0, -110.0, -90.0, -290.0, -90.0), 
+          (-90.0, 90.0, 90.0, 90.0, 90.0, -90.0, -90.0, -90.0), 
+          (110.0, 90.0, 290.0, 90.0, 290.0, -90.0, 110.0, -90.0), 
+          (-290.0, -110.0, -110.0, -110.0, -110.0, -290.0, -290.0, -290.0), 
+          (-90.0, -110.0, 90.0, -110.0, 90.0, -290.0, -90.0, -290.0), 
+          (110.0, -110.0, 290.0, -110.0, 290.0, -290.0, 110.0, -290.0)]
+
     # a dictionary to get the center point of each sector => key : sector number , values : coordinates tuples
     center_of_sectors = {1:(-197,197),2:(0,195),3:(197.5, 197.5),4:(-197.5, 0.0),5:(0.0, 0.0),6:(197.5, 0.0),7:(-197.5, -197.5),8:(0.0, -197.5),9:(197.5, -197.5)}
     def __init__(self,h:int,w:int): # constructor function to initialize an object (height of screen , width of screen)
@@ -60,3 +71,23 @@ class board:                # create a class
             x.color("dark goldenrod")               # set the color of a line
             x.forward(x_shpae["len"])               # draw a line with the length
 
+       # A utility function to calculate area of triangle formed by (x1, y1), (x2, y2) and (x3, y3)
+    def area(self, x1, y1, x2, y2, x3, y3):
+        return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0)    # return the area of a triangle        
+
+    # A function to check whether point P(x, y) lies inside the rectangle
+    # formed by A(x1, y1), B(x2, y2), C(x3, y3) and D(x4, y4)
+    def check(self, x1, y1, x2, y2, x3, y3, x4, y4, x, y):  
+        # Calculate area of rectangle ABCD
+        A = (self.area(x1, y1, x2, y2, x3, y3) + self.area(x1, y1, x4, y4, x3, y3))
+        # Calculate area of triangle PAB
+        A1 = self.area(x, y, x1, y1, x2, y2)
+        # Calculate area of triangle PBC
+        A2 = self.area(x, y, x2, y2, x3, y3)
+        # Calculate area of triangle PCD
+        A3 = self.area(x, y, x3, y3, x4, y4)
+        # Calculate area of triangle PAD
+        A4 = self.area(x, y, x1, y1, x4, y4)
+        # Check if sum of A1, A2, A3  and A4 is same as A
+        return (A == A1 + A2 + A3 + A4)  
+                 
