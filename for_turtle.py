@@ -1,5 +1,4 @@
 import turtle               # import turtle library
-import time                 # import time library
 screen = turtle.Screen()    # initialize the screen for turtle
 lines_points = [(-295,100),(-295,-100),(-100,295),(100,295)]    # tuple coordinate points to draw "X" or "Y"
 angle_degress = [0,0,270,270]                                   # degree list to set heading for "X" or "Y"
@@ -18,6 +17,7 @@ class board:                # create a class
 
     # a dictionary to get the center point of each sector => key : sector number , values : coordinates tuples
     center_of_sectors = {1:(-197,197),2:(0,195),3:(197.5, 197.5),4:(-197.5, 0.0),5:(0.0, 0.0),6:(197.5, 0.0),7:(-197.5, -197.5),8:(0.0, -197.5),9:(197.5, -197.5)}
+    
     def __init__(self,h:int,w:int): # constructor function to initialize an object (height of screen , width of screen)
         screen.setup(h,w)   # setup the screen with the parameters
         self.draw_lines()   # invoke a method of draw lines so that there will be nine sectors
