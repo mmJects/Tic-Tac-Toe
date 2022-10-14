@@ -4,7 +4,6 @@ import for_turtle as ttt
 from for_turtle import board as B
 
 tur = turtle.Turtle()
-tur.Screen().setup(600,600)
 tur.hideturtle()
 tur.penup()
 tur.color("gold")
