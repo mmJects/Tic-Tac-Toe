@@ -44,11 +44,14 @@ if __name__ == '__main__':
             ply.choose_location()               # invoke a method for choose location
         turtle.Screen().mainloop()              # call mainloop so that click points will be detected
     elif mode == 2:
-        ai_ez = computer_easy.ComputerEz(600,600,ply.ply_one_mark)
+        ai_ez = computer_easy.Computer(600,600,ply.ply_one_mark)
         turt.write(f" Player ({ply.ply_one_mark}) Vs Easy AI ({ply.ply_two_mark}) ", font=('Courier', 25, 'bold'),align='center')
         time.sleep(3)                           # wait 3 seconds for announcement
         turt.clear()                            # clear the announcement
         for j in range(5):
             ai_ez.choose_location()
         turtle.Screen().mainloop()              # call mainloop so that click points will be detected
+    else:
+        pass
+    
          

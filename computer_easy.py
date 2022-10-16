@@ -10,7 +10,7 @@ tur = turtle.Turtle()               # create an instacne of turtle to write on c
 tur.hideturtle()                    # hide turtle so that there will be only notices
 tur.color("deep sky blue")          # set the color of a turtle 
 
-class ComputerEz(Two_Players):
+class Computer(Two_Players):
     def __init__(self, h: int, w: int,mark:str):
         super().__init__(h, w)
         self.player_mark = mark
