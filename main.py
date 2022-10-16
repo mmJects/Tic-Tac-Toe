@@ -33,6 +33,7 @@ if __name__ == '__main__':
     
     mode = game.game_intro()
     ply = Ply2(600,600)                     # create an instance of two_players with height and width
+    ply.create_sectors()
     ply.ask_ply_one_mark()                  # invoke ask mark for player one
     if mode == 1:
         # write an announcement with relating signs and players

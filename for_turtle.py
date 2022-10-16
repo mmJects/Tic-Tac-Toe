@@ -20,6 +20,8 @@ class board:                # create a class
     
     def __init__(self,h:int,w:int): # constructor function to initialize an object (height of screen , width of screen)
         screen.setup(h,w)   # setup the screen with the parameters
+
+    def create_sectors(self):
         self.draw_lines()   # invoke a method of draw lines so that there will be nine sectors
     
     def draw_lines(self):   # method of draw lines
