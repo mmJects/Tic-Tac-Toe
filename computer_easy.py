@@ -4,27 +4,30 @@ import turtle
 import random                                       # import random module to get random numbers
 import time
 from two_players import Two_Players 
-
+from hard_ai import Unbeatable
 
 tur = turtle.Turtle()               # create an instacne of turtle to write on canvas
 tur.hideturtle()                    # hide turtle so that there will be only notices
 tur.color("deep sky blue")          # set the color of a turtle 
 
-class Computer(Two_Players):
-    def __init__(self, h: int, w: int,mark:str):
-        super().__init__(h, w)
-        self.player_mark = mark
-        self.ai_mark = "X" if self.player_mark == "O" else "O"
-        self.mark_sign = {self.player_mark:"Human",self.ai_mark:"Computer"}
+class Computer(Two_Players):        # create an instance of Computer class for computer modes (inherting two players)
+    def __init__(self, h: int, w: int,mark:str,easy=True):     # mark for player sign , easy for checking two modes
+        super().__init__(h, w)                                 # inherting two attributes from two players class
+        self.player_mark = mark                                # make player's mark class attribute 
+        self.ai_mark = "X" if self.player_mark == "O" else "O" # decide for ai_mark according to player_mark
+        self.mark_sign = {self.player_mark:"Human",self.ai_mark:"Computer"} # mark sign for declaration
+        self.easy = easy                                       # boolean type to check easy mode or not
+        if not self.easy:                                      # if not easy mode
+            self.ai_mode = Unbeatable(self.player_mark,self.ai_mark)    # make an instance of hard ai mode
 
-    def draw_random(self, mark:str):
-        while True:
-            x = random.randint(1,9)
-            if self.lst[x-1] != " ":
-                continue
-            self.lst[x-1] = mark
-            self.draw_markings(self.ai_mark,x)
-            break
+    def draw_random(self, mark:str):                # draw random class for easy_ai mode
+        while True:                                 # while looping to get valid position
+            x = random.randint(1,9)                 # make a random choice from 1 to 9
+            if self.lst[x-1] != " ":                # if the random number's location is occupied
+                continue                            # restart the loop
+            self.lst[x-1] = mark                    # if valid , assign mark into the list
+            self.draw_markings(self.ai_mark,x)      # draw mark in canvas
+            break                                   # break the while loop
 
     def fxn(self, x, y):                                # override the method of two players 
         for i in range(1,10):                           # loop through 9 times as there are 9 sections on board
@@ -40,8 +43,14 @@ class Computer(Two_Players):
                     self.lst[i-1] = self.player_mark         # assign user's mark into class list
                     if self.check_winner(self.player_mark):           # check winner with class list  # if some one wins , lose or tie
                         turtle.Screen().onclick(None)   # set onclick None so that we can't click anymore
-                    else:
-                        self.draw_random(self.ai_mark)
+                    else:                               # if player didn't win
+                        if self.easy:                           # if it is easy mode
+                            self.draw_random(self.ai_mark)      # draw mark randomly
+                        else:                                           # if it is computer serious mode
+                            self.ai_mode.set_lst_to_test(self.lst)      # put the main list into algorithm to test
+                            pos = self.ai_mode.ai_hd()                  # get the best move for ai
+                            self.lst[pos] = self.ai_mark                # assign the mark into the original list
+                            self.draw_markings(self.ai_mark,pos+1)      # draw mark onto canvas
                         if self.check_winner(self.ai_mark):           # check winner with class list  # if some one wins , lose or tie
                             turtle.Screen().onclick(None)   # set onclick None so that we can't click anymore
                 elif self.lst[i-1] != " ":              # if user's choice is occupied

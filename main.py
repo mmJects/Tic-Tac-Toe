@@ -33,9 +33,9 @@ if __name__ == '__main__':
     
     mode = game.game_intro()
     ply = Ply2(600,600)                     # create an instance of two_players with height and width
-    ply.create_sectors()
+    ply.create_sectors()                    # draw sectors on canvas
     ply.ask_ply_one_mark()                  # invoke ask mark for player one
-    if mode == 1:
+    if mode == 1:                               # if user chose player Vs player mode
         # write an announcement with relating signs and players
         turt.write(f"Player 1 ({ply.ply_one_mark}) Vs Player 2 ({ply.ply_two_mark}) ", font=('Courier', 25, 'bold'),align='center')
         time.sleep(3)                           # wait 3 seconds for announcement
@@ -43,15 +43,21 @@ if __name__ == '__main__':
         for j in range(9):                      # loop through 9 times as there are 9 places on board
             ply.choose_location()               # invoke a method for choose location
         turtle.Screen().mainloop()              # call mainloop so that click points will be detected
-    elif mode == 2:
-        ai_ez = computer_easy.Computer(600,600,ply.ply_one_mark)
-        turt.write(f" Player ({ply.ply_one_mark}) Vs Easy AI ({ply.ply_two_mark}) ", font=('Courier', 25, 'bold'),align='center')
+    else:                                   # if user didn't choose two player mode
+        if mode == 2:                       # if user chode easy mode
+            # make an instance of computer easy mode (parameter:player mark)
+            ai_ez = computer_easy.Computer(600,600,ply.ply_one_mark)    
+            # write an announcement with relating signs and player and computer
+            turt.write(f" Player ({ply.ply_one_mark}) Vs Easy AI ({ply.ply_two_mark}) ", font=('Courier', 25, 'bold'),align='center')
+        elif mode == 3:                     # if user chose the unbeatable mode
+            # make an instance of computer easy mode (parameter:player mark , False boolean to easy mode)
+            ai_ez = computer_easy.Computer(600,600,ply.ply_one_mark,False)  
+            turt.write(f" Player ({ply.ply_one_mark}) Vs Unbeatable AI ({ply.ply_two_mark}) ", font=('Courier', 20, 'bold'),align='center')                 
         time.sleep(3)                           # wait 3 seconds for announcement
         turt.clear()                            # clear the announcement
-        for j in range(5):
-            ai_ez.choose_location()
+        for j in range(5):                      # loop through 5 times coz player have to choose at most 5 times
+            ai_ez.choose_location()             # invoke a method to choose location
         turtle.Screen().mainloop()              # call mainloop so that click points will be detected
-    else:
-        pass
+
     
          

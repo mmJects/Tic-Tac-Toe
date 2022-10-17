@@ -8,7 +8,9 @@ class Unbeatable:                           # create a Unbeatable class for minm
     def __init__(self,player:str,ai:str):   # intialize a class with player mark and ai mark
         self.player = player                # set player mark
         self.ai = ai                        # set ai mark
-        self.lst = ["O"," "," ","O"," "," "," "," "," "]
+
+    def set_lst_to_test(self,lst:list):     # set a list to find best move 
+        self.lst = lst[::]                  # use slicing coz we don't want to touch the original list
 
     # test function for all available places
     def ai_hd(self):
@@ -90,7 +92,4 @@ class Unbeatable:                           # create a Unbeatable class for minm
             elif self.lst[i] == self.ai:
                 return -10
 
-hd = Unbeatable("O","X")
-pos = hd.ai_hd()
-hd.lst[pos] = hd.ai
-print(hd.lst)
+
